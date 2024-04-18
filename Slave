@@ -2,8 +2,8 @@
 #include <Wire.h>
 
 int btnPin = 2; // GPIO #3-Push button on encoder
-int DT = 3;     
-int CLK = 4;   
+int DT = 3;     // GPIO #4-DT on encoder (Output B)
+int CLK = 4;    // GPIO #5-CLK on encoder (Output A)
 BfButton btn(BfButton::STANDALONE_DIGITAL, btnPin, true, LOW);
 
 int counter = 0;
@@ -30,8 +30,8 @@ void setup() {
 
   btn.onPress(pressHandler);
 
-  Wire.begin(4);                  
-  Wire.onRequest(requestEvent); 
+  Wire.begin(4);                  // Join I2C bus with address #4
+  Wire.onRequest(requestEvent);  // Register event for I2C request
 }
 
 void loop() {
@@ -63,5 +63,5 @@ void requestEvent() {
     Wire.write(btn_state);
     state_btn = false;
   }
- 
+   // Send the current angle value over I2C
 }
